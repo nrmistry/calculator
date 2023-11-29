@@ -1,0 +1,15 @@
+@use "./variables" as *;
+
+.main-window{
+    border:3px solid $secondary-color;
+    border-radius: 20px;
+    padding:20px;
+    display: flex;
+    flex-direction:column;
+    //justify-content: center;
+    align-items: center;
+    width: 390px;
+    height: 800px;
+    //position: absolute;
+
+}
