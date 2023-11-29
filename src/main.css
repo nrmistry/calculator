@@ -1,0 +1,40 @@
+.main-window {
+  border: 3px solid white;
+  border-radius: 20px;
+  box-shadow: rgba(13, 57, 161, 0.871);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 390px;
+  height: 800px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-template-rows: repeat(5, 1fr);
+  grid-row-gap: 10px;
+  flex: display;
+  align-items: flex-end;
+  width: 220px;
+  height: 480px;
+}
+.buttons__button {
+  color: white;
+  border: 3px solid line white;
+  border-radius: 8px;
+  height: 75px;
+  width: 75px;
+}
+
+.screen {
+  color: white;
+}
+
+* {
+  background-color: black;
+  margin: 2px;
+  padding: 5px;
+  box-sizing: border-box;
+}/*# sourceMappingURL=main.css.map */
