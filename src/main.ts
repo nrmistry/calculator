@@ -7,134 +7,100 @@ const numberOperators = document.querySelectorAll<HTMLButtonElement>(".buttons__
 const allClear = document.querySelector<HTMLButtonElement>("#ac");
 const clear = document.querySelector<HTMLButtonElement>("#clearButton");
 const plusButton = document.querySelector<HTMLButtonElement>("#plus");
-const equalsButton = document.querySelector<HTMLButtonElement>("#equals");
+const equalsButton = document.querySelector<HTMLElement>("#equals");
 
-//ERROR MESSAGES - SPLIT SO I CAN SEE WHAT IS HAVING THE ISSUE 
-
-if(!displayScreen || !displaySum || !allClear || !clear || !plusButton || !equalsButton){
-  throw new Error ("issues with Selector");
+// ERROR MESSAGES - SPLIT SO I CAN SEE WHAT IS HAVING THE ISSUE
+if (!displayScreen || !displaySum || !allClear || !clear || !plusButton || !equalsButton) {
+  throw new Error("Issues with Selector");
 }
 
-if( numberButtons.length === 0){
-  throw new Error ("issues with selall")
+if (numberButtons.length === 0) {
+  throw new Error("Issues with numberButtons");
 }
 
-if( numberOperators.length === 0){
-  throw new Error ("issues with selall1")
+if (numberOperators.length === 0) {
+  throw new Error("Issues with numberOperators");
 }
 
-//SET A VARIABLE TO AN EMPTY STRING
+// SET VARIABLES TO EMPTY STRINGS
+let initialSum = "";
+let secondSum = "";
+let operatorSum = "";
+let result = "";
 
-let initialSum:string = "";
+// ADD EVENT LISTENERS TO NUMBER AND OPERATOR BUTTONS
+// TO SHOW AS A SUM AND DISPLAY EQUATION
+const handleNumberPress = (event: Event) => {
+  const numberButton = event.target as HTMLButtonElement;
+  if (!operatorSum) {
+    initialSum += numberButton.innerText;
+    
+  } else {
+    secondSum += numberButton.innerText;
+  }
+  displayScreen.innerText = initialSum + (operatorSum ? " " + operatorSum + " " + secondSum : "");
+}
 
-//ADD EVENT LISTENERS TO NUMBER AND OPERATOR BUTTONS 
-//TO SHOW AS A SUM AND DISPLAY EQUATION
-
-numberButtons.forEach (numberValue => {
-  numberValue.addEventListener("click", () => {
-    handleButtonPress(numberValue.innerHTML);
-  });
+numberButtons.forEach((numberButton) => {
+  numberButton.addEventListener("click", handleNumberPress);
 });
 
-numberOperators.forEach (operator => {
-  operator.addEventListener("click", () => {
-    handleButtonPress(operator.innerHTML);
-  });
+const handleOperatorPress = (event: Event) => {
+  const operatorButton = event.target as HTMLButtonElement;
+  operatorSum = operatorButton.innerText;
+  displayScreen.innerText += operatorButton.innerText;
+}
+
+numberOperators.forEach((operatorButton) => {
+  operatorButton.addEventListener("click", handleOperatorPress);
 });
 
-//MAKING AC BUTTON WORK 
-
-allClear.addEventListener("click", () => {
-  clearCalculator();
-})
-
-//MKAING CLEAR BUTTON WORK - issue
-clear.addEventListener("click", () => {
-  clearLastEntry();
-})
-
-//MAKING EQUALS BUTTON WORK
-if (equalsButton){
-  equalsButton.addEventListener("click", () => {
-    performCalculation();
-  });
+// EVENT LISTENER AND FUNCTION FOR AC AND C BUTTON
+const handleAllClear = () => {
+  console.log("AC button clicked");
+  initialSum = "";
+  secondSum = "";
+  operatorSum = "";
+  result =""
+  displayScreen.innerText = "0";
 }
 
-// FUNCTION TO HANDLE BUTTON PRESSES
+allClear.addEventListener("click", handleAllClear);
 
-const handleButtonPress = (value:string)=> {
-  initialSum += value;
-  displayScreen.innerHTML = initialSum;
-}
 
-//FUNCTION TO HANDLE ALL CLEAR
-
-const clearCalculator = () => {
-  initialSum="";
-  displayScreen.innerHTML = "0";
-  displaySum.innerHTML = initialSum;
-}
-
-//FUNCTION TO HANDLE CLEAR
-
-const clearLastEntry = () => {
-  initialSum = initialSum.slice(0,-1);
-  displayScreen.innerHTML = initialSum;
-  displaySum.innerHTML = initialSum;
-}
-
-//FUNCTION TO PERFORM CALCULATIONS 
-
-const performCalculation = () => {
-  try{
-    let result = 0;
-    let currentOperator = "+";
-    const parts = initialSum.split(/(\+|\-|\*|\/)/).filter(part => part.trim() !== '');
-
-    for (let i=0; i<parts.length; i++){
-      const part = parts[i];
-
-      if (["+", "-", "*", "/"].includes(part[1])) {
-        currentOperator = part;
+// FUNCTIONS TO HANDLE EQUATIONS 
+const performOperation = (initialSum: number, secondSum: number, operator: string): number => {
+  switch (operator) {
+    case "+":
+      return initialSum + secondSum;
+    case "-":
+      return initialSum - secondSum;
+    case "×": 
+      return initialSum * secondSum;
+    case "÷": 
+      if (secondSum !== 0) {
+        return initialSum / secondSum;
+      } else {
+        throw new Error("Cannot divide by zero");
       }
-      else {
-        const number = parseFloat(part);
+    default:
+      throw new Error("Invalid operator");
+  }
+}
 
-        switch (currentOperator) {
-          case "+":
-            result += number;
-            break;
-          case "-": 
-            result -= number; 
-            break;
-          case "*":
-            result *= number;
-            break;
-          case "/":
-            if (number !== 0) {
-              result /= number;
-            } else { 
-              throw new Error ("cannot divide by zero");
-            } 
-            break;
-          default:
-            throw new Error ("invalid operator")
-        }
-      }
-    }
-
-    displayScreen.innerHTML = result.toString();
-    displaySum.innerHTML =initialSum + result;
-
+// TO HANDLE EQUALS FUNCTION
+const handleEqualsPress = () => {
+  try {
+    const result = performOperation(Number(initialSum), Number(secondSum), operatorSum);
+    const formattedResult = Number.isInteger(result) ? result.toString() : result.toFixed(5);
+    displayScreen.innerText = formattedResult;
     initialSum = result.toString();
+    secondSum = "";
+    operatorSum = "";
+  } catch (error) {
+    console.error("Error in calculation:", error);
+    displayScreen.innerText = "Error";
   }
+}
 
-  catch(error) {
-    console.error("Error performing calculation", error);
-    clearCalculator();
-  }
-};
-
-
-
-
+equalsButton.addEventListener("click", handleEqualsPress)
