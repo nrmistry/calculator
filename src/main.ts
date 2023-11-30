@@ -33,9 +33,11 @@ let result = "";
 const handleNumberPress = (event: Event) => {
   const numberButton = event.target as HTMLButtonElement;
   if (!operatorSum) {
+    if(numberButton.id != "decimal" || (numberButton.id == "decimal" && !initialSum.includes("."))) 
     initialSum += numberButton.innerText;
     
   } else {
+    (numberButton.id != "decimal" || (numberButton.id == "decimal" && !secondSum.includes("."))) 
     secondSum += numberButton.innerText;
   }
   displayScreen.innerText = initialSum + (operatorSum ? " " + operatorSum + " " + secondSum : "");
@@ -66,6 +68,19 @@ const handleAllClear = () => {
 }
 
 allClear.addEventListener("click", handleAllClear);
+
+const handleClear = () => {
+  if (secondSum !== ""){
+    secondSum=secondSum.slice(0,-1);
+  }else if (operatorSum !== "") {
+    operatorSum= "";
+  } else if (initialSum !== "") {
+    initialSum=initialSum.slice(0,-1)
+  }
+  displayScreen.innerText = initialSum + (operatorSum ? " " + operatorSum + " " + secondSum : "");
+}
+
+clear.addEventListener("click", handleClear);
 
 
 // FUNCTIONS TO HANDLE EQUATIONS 
