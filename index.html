@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
-    <script type="module" src="/src/main.ts"></script>
     <link rel="stylesheet" href="main.css" />
   </head> 
   <body>
@@ -14,37 +13,37 @@
     <div class="main-window">
     <!--Display screen for calculators-->  
       <div class="screen">
-        <div class="screen__result--display" data-role="displaysum">this is the sum</div>
-        <div class="screen__result--answer" data-role="display">0</div>
+        <div class="screen__result--display" ></div>
+        <div class="screen__result--answer" ></div>
       </div>
     <!--Buttons on the key pad-->
       <div id="buttonid" class="buttons">
-        <button class="buttons__button buttons__button--operation" value="ac">ac</button>
-        <button class="buttons__button buttons__button--operation" value="+/-" >&plusmn;</button>
-        <button class="buttons__button buttons__button--operation" value="%">%</button>
-        <button class="buttons__button buttons__button--operation" value="/">&divide;</button>
+        <button class="buttons__button buttons__button--operator" >ac</button>
+        <button class="buttons__button buttons__button--operator"  >&plusmn;</button>
+        <button class="buttons__button buttons__button--operator" >%</button>
+        <button class="buttons__button buttons__button--operator" >&divide;</button>
 
-        <button class="buttons__button buttons__button--number" value="1">1</button>
-        <button class="buttons__button buttons__button--number" value="2">2</button>
-        <button class="buttons__button buttons__button--number" value="3">3</button>
-        <button class="buttons__button buttons__button--operataion" value="*">&times;</button>
+        <button class="buttons__button buttons__button--number" >1</button>
+        <button class="buttons__button buttons__button--number" >2</button>
+        <button class="buttons__button buttons__button--number" >3</button>
+        <button class="buttons__button buttons__button--operator" >&times;</button>
 
-        <button class="buttons__button buttons__button--number" value="4">4</button>
-        <button class="buttons__button buttons__button--number" value="5">5</button>
-        <button class="buttons__button buttons__button--number" value="6">6</button>
-        <button class="buttons__button buttons__button--operation" value="-">&minus;</button>
+        <button class="buttons__button buttons__button--number" >4</button>
+        <button class="buttons__button buttons__button--number" >5</button>
+        <button class="buttons__button buttons__button--number" >6</button>
+        <button class="buttons__button buttons__button--operator" >&minus;</button>
 
-        <button class="buttons__button buttons__button--number" value="7">7</button>
-        <button class="buttons__button buttons__button--number" value="8">8</button>
-        <button class="buttons__button buttons__button--number" value="9">9</button>
-        <button class="buttons__button buttons__button--operation" value="+">&plus;</button>
+        <button class="buttons__button buttons__button--number" >7</button>
+        <button class="buttons__button buttons__button--number" >8</button>
+        <button class="buttons__button buttons__button--number" >9</button>
+        <button class="buttons__button buttons__button--operator" >&plus;</button>
 
-        <button class="buttons__button buttons__button--number" value="0">0</button>
-        <button class="buttons__button buttons__button--operation" value=".">.</button>
-        <button class="buttons__button buttons__button--operation" value="=">=</button>
+        <button class="buttons__button buttons__button--number" >0</button>
+        <button class="buttons__button buttons__button--operator" >.</button>
+        <button class="buttons__button buttons__button--operator" >=</button>
       </div>
-      
     </div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
 
