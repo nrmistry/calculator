@@ -32,64 +32,109 @@ let initialSum:string = "";
 
 numberButtons.forEach (numberValue => {
   numberValue.addEventListener("click", () => {
-    initialSum += numberValue.innerHTML;
-    console.log("current initialSum", initialSum)
-    displayScreen.innerHTML = initialSum
-  });
-});
-
-
-numberButtons.forEach (numberValues => {
-  numberValues.addEventListener("click", () => {
-    initialSum += numberValues.innerHTML;
-    console.log("current initialSum", initialSum)
-    displaySum.innerHTML = initialSum
+    handleButtonPress(numberValue.innerHTML);
   });
 });
 
 numberOperators.forEach (operator => {
   operator.addEventListener("click", () => {
-    initialSum += operator.innerHTML;
-    console.log("current initialSum", initialSum)
-    displayScreen.innerHTML = initialSum
+    handleButtonPress(operator.innerHTML);
   });
 });
-
-numberOperators.forEach (operatorPress => {
-  operatorPress.addEventListener("click", () => {
-    initialSum += operatorPress.innerHTML;
-    console.log("current initialSum", initialSum)
-    displaySum.innerHTML = initialSum
-  });
-});
-
-
 
 //MAKING AC BUTTON WORK 
 
 allClear.addEventListener("click", () => {
-  initialSum = "";
-  displayScreen.innerHTML = "0"
-  displayScreen.innerHTML = initialSum
-})
-
-allClear.addEventListener("click", () => {
-  initialSum = "";
-  displaySum.innerHTML = initialSum
+  clearCalculator();
 })
 
 //MKAING CLEAR BUTTON WORK - issue
-
 clear.addEventListener("click", () => {
-  initialSum = initialSum.slice(0,-1);
-  displayScreen.innerHTML = initialSum
-  console.log("current initialSum", initialSum);
+  clearLastEntry();
 })
 
-//MAKING EQUALS WORK
+//MAKING EQUALS BUTTON WORK
+if (equalsButton){
+  equalsButton.addEventListener("click", () => {
+    performCalculation();
+  });
+}
 
+// FUNCTION TO HANDLE BUTTON PRESSES
 
-//MAKING OPERATORS WORK  
+const handleButtonPress = (value:string)=> {
+  initialSum += value;
+  displayScreen.innerHTML = initialSum;
+}
+
+//FUNCTION TO HANDLE ALL CLEAR
+
+const clearCalculator = () => {
+  initialSum="";
+  displayScreen.innerHTML = "0";
+  displaySum.innerHTML = initialSum;
+}
+
+//FUNCTION TO HANDLE CLEAR
+
+const clearLastEntry = () => {
+  initialSum = initialSum.slice(0,-1);
+  displayScreen.innerHTML = initialSum;
+  displaySum.innerHTML = initialSum;
+}
+
+//FUNCTION TO PERFORM CALCULATIONS 
+
+const performCalculation = () => {
+  try{
+    let result = 0;
+    let currentOperator = "+";
+    const parts = initialSum.split(/(\+|\-|\*|\/)/).filter(part => part.trim() !== '');
+
+    for (let i=0; i<parts.length; i++){
+      const part = parts[i];
+
+      if (["+", "-", "*", "/"].includes(part[1])) {
+        currentOperator = part;
+      }
+      else {
+        const number = parseFloat(part);
+
+        switch (currentOperator) {
+          case "+":
+            result += number;
+            break;
+          case "-": 
+            result -= number; 
+            break;
+          case "*":
+            result *= number;
+            break;
+          case "/":
+            if (number !== 0) {
+              result /= number;
+            } else { 
+              throw new Error ("cannot divide by zero");
+            } 
+            break;
+          default:
+            throw new Error ("invalid operator")
+        }
+      }
+    }
+
+    displayScreen.innerHTML = result.toString();
+    displaySum.innerHTML =initialSum + result;
+
+    initialSum = result.toString();
+  }
+
+  catch(error) {
+    console.error("Error performing calculation", error);
+    clearCalculator();
+  }
+};
+
 
 
 
