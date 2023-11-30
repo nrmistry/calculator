@@ -4,8 +4,14 @@ const displaySum = document.querySelector<HTMLDivElement>(".screen__result--disp
 const displayScreen = document.querySelector<HTMLDivElement>(".screen__result--answer");
 const numberButtons = document.querySelectorAll<HTMLButtonElement>(".buttons__button--number");
 const numberOperators = document.querySelectorAll<HTMLButtonElement>(".buttons__button--operator");
+const allClear = document.querySelector<HTMLButtonElement>("#ac");
+const clear = document.querySelector<HTMLButtonElement>("#clearButton");
+const plusButton = document.querySelector<HTMLButtonElement>("#plus");
+const equalsButton = document.querySelector<HTMLButtonElement>("#equals");
 
-if(!displayScreen || !displaySum){
+//ERROR MESSAGES - SPLIT SO I CAN SEE WHAT IS HAVING THE ISSUE 
+
+if(!displayScreen || !displaySum || !allClear || !clear || !plusButton || !equalsButton){
   throw new Error ("issues with Selector");
 }
 
@@ -17,7 +23,12 @@ if( numberOperators.length === 0){
   throw new Error ("issues with selall1")
 }
 
+//SET A VARIABLE TO AN EMPTY STRING
+
 let initialSum:string = "";
+
+//ADD EVENT LISTENERS TO NUMBER AND OPERATOR BUTTONS 
+//TO SHOW AS A SUM AND DISPLAY EQUATION
 
 numberButtons.forEach (numberValue => {
   numberValue.addEventListener("click", () => {
@@ -26,6 +37,7 @@ numberButtons.forEach (numberValue => {
     displayScreen.innerHTML = initialSum
   });
 });
+
 
 numberButtons.forEach (numberValues => {
   numberValues.addEventListener("click", () => {
@@ -50,4 +62,34 @@ numberOperators.forEach (operatorPress => {
     displaySum.innerHTML = initialSum
   });
 });
+
+
+
+//MAKING AC BUTTON WORK 
+
+allClear.addEventListener("click", () => {
+  initialSum = "";
+  displayScreen.innerHTML = "0"
+  displayScreen.innerHTML = initialSum
+})
+
+allClear.addEventListener("click", () => {
+  initialSum = "";
+  displaySum.innerHTML = initialSum
+})
+
+//MKAING CLEAR BUTTON WORK - issue
+
+clear.addEventListener("click", () => {
+  initialSum = initialSum.slice(0,-1);
+  displayScreen.innerHTML = initialSum
+  console.log("current initialSum", initialSum);
+})
+
+//MAKING EQUALS WORK
+
+
+//MAKING OPERATORS WORK  
+
+
 

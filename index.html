@@ -13,13 +13,13 @@
     <div class="main-window">
     <!--Display screen for calculators-->  
       <div class="screen">
-        <div class="screen__result--display" ></div>
-        <div class="screen__result--answer" ></div>
+        <div class="screen__result--display"></div>
+        <div class="screen__result--answer" >0</div>
       </div>
     <!--Buttons on the key pad-->
       <div id="buttonid" class="buttons">
-        <button class="buttons__button buttons__button--operator" >ac</button>
-        <button class="buttons__button buttons__button--operator"  >&plusmn;</button>
+        <button class="buttons__button buttons__button--operator" id="ac">ac</button>
+        <button class="buttons__button buttons__button--operator" id="clearButton">C</button>
         <button class="buttons__button buttons__button--operator" >%</button>
         <button class="buttons__button buttons__button--operator" >&divide;</button>
 
@@ -36,11 +36,11 @@
         <button class="buttons__button buttons__button--number" >7</button>
         <button class="buttons__button buttons__button--number" >8</button>
         <button class="buttons__button buttons__button--number" >9</button>
-        <button class="buttons__button buttons__button--operator" >&plus;</button>
+        <button class="buttons__button buttons__button--operator" id="plus" >&plus;</button>
 
         <button class="buttons__button buttons__button--number" >0</button>
         <button class="buttons__button buttons__button--operator" >.</button>
-        <button class="buttons__button buttons__button--operator" >=</button>
+        <button class="buttons__button buttons__button--operator" id="equals">=</button>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
