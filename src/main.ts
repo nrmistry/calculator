@@ -70,6 +70,8 @@ const handleAllClear = () => {
 
 allClear.addEventListener("click", handleAllClear);
 
+//having a slight issue 
+
 const handleClear = () => {
   if (secondSum !== ""){
     secondSum=secondSum.slice(0,-1);
@@ -136,10 +138,7 @@ const handleEqualsPress = () => {
     console.error("Error in calculation:", error);
     displayScreen.innerText = "Error";
   }
-
-  if (displayScreen.innerText == "43110") {
-    displayScreen.innerText = "HELLO!!"
-  }
+  
 }
 
 // FUNCTION TO HANDLE PERCENTAGE SEPARATLEY
