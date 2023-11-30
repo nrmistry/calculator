@@ -27,7 +27,7 @@ if (numberOperators.length === 0) {
 let initialSum = "";
 let secondSum = "";
 let operatorSum = "";
-let result = "";
+let result = " ";
 
 // ADD EVENT LISTENERS TO NUMBER AND OPERATOR BUTTONS
 // TO SHOW AS A SUM AND DISPLAY EQUATION
