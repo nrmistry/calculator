@@ -8,9 +8,10 @@ const allClear = document.querySelector<HTMLButtonElement>("#ac");
 const clear = document.querySelector<HTMLButtonElement>("#clearButton");
 const plusButton = document.querySelector<HTMLButtonElement>("#plus");
 const equalsButton = document.querySelector<HTMLElement>("#equals");
+const percentageButton = document.querySelector<HTMLButtonElement>("#percentage");
 
 // ERROR MESSAGES - SPLIT SO I CAN SEE WHAT IS HAVING THE ISSUE
-if (!displayScreen || !displaySum || !allClear || !clear || !plusButton || !equalsButton) {
+if (!displayScreen || !displaySum || !allClear || !clear || !plusButton || !equalsButton ||!percentageButton) {
   throw new Error("Issues with Selector");
 }
 
@@ -33,11 +34,11 @@ let result = "";
 const handleNumberPress = (event: Event) => {
   const numberButton = event.target as HTMLButtonElement;
   if (!operatorSum) {
-    if(numberButton.id != "decimal" || (numberButton.id == "decimal" && !initialSum.includes("."))) 
+    
     initialSum += numberButton.innerText;
     
   } else {
-    (numberButton.id != "decimal" || (numberButton.id == "decimal" && !secondSum.includes("."))) 
+    
     secondSum += numberButton.innerText;
   }
   displayScreen.innerText = initialSum + (operatorSum ? " " + operatorSum + " " + secondSum : "");
@@ -63,7 +64,7 @@ const handleAllClear = () => {
   initialSum = "";
   secondSum = "";
   operatorSum = "";
-  result =""
+  result = "";
   displayScreen.innerText = "0";
 }
 
@@ -81,6 +82,18 @@ const handleClear = () => {
 }
 
 clear.addEventListener("click", handleClear);
+
+//FUNCTION FOR PERCENTAGE
+
+const handlePercentage = () => {
+  if (secondSum === "") {
+   initialSum = (parseFloat(initialSum) / 100).toString();
+ } else {
+    secondSum
+  }
+}
+
+percentageButton.addEventListener("click", handlePercentage);
 
 
 // FUNCTIONS TO HANDLE EQUATIONS 
@@ -106,16 +119,32 @@ const performOperation = (initialSum: number, secondSum: number, operator: strin
 // TO HANDLE EQUALS FUNCTION
 const handleEqualsPress = () => {
   try {
-    const result = performOperation(Number(initialSum), Number(secondSum), operatorSum);
+    let result: number;
+    
+    if (operatorSum === "%") {
+      result = handlePercentageOperation(Number(initialSum));
+    } else {
+      result = performOperation(Number(initialSum), Number(secondSum), operatorSum);
+    }
     const formattedResult = Number.isInteger(result) ? result.toString() : result.toFixed(5);
+
     displayScreen.innerText = formattedResult;
-    initialSum = result.toString();
+    initialSum = formattedResult;
     secondSum = "";
     operatorSum = "";
   } catch (error) {
     console.error("Error in calculation:", error);
     displayScreen.innerText = "Error";
   }
+
+  if (displayScreen.innerText == "43110") {
+    displayScreen.innerText = "HELLO!!"
+  }
+}
+
+// FUNCTION TO HANDLE PERCENTAGE SEPARATLEY
+const handlePercentageOperation = (value: number): number => {
+  return value ;
 }
 
 equalsButton.addEventListener("click", handleEqualsPress)
